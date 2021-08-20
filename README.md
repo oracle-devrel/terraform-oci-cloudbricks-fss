@@ -46,6 +46,27 @@ fss_mount_target_name                = "my_mount_target"
 
 ```
 
+### Variable specific considerations
+- When variable `num_of_fss` is greater than 1, there is a chance that the following error appears:
+
+```shell
+Error: 409-Conflict 
+ Provider version: 4.40.0, released on 2021-08-18.  
+ Service: File Storage System 
+ Error Message: Another filesystem is currently being provisioned, try again later 
+ OPC request ID: 08cdbcfa22bd1618f7c59b6c784c574d/D0703FEC7507DB939448D64253BBC0F8/AA11BA35A2B6FE2F2B18A25F4BEDF26C 
+ Suggestion: The resource is in a conflicted state. Please retry again or contact support for help with service: File Storage System
+ 
+ 
+   with oci_file_storage_file_system.FileStorage[5],
+   on fss.tf line 2, in resource "oci_file_storage_file_system" "FileStorage":
+    2: resource "oci_file_storage_file_system" "FileStorage" {
+  
+```  
+  
+- If this occurs, be sure to handle a retry logic on code that executes this module at least `num_of_fss + 1 ` times
+
+
 ## Sample provider
 The following is the base provider definition to be used with this module
 
