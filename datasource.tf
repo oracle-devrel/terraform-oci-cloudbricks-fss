@@ -56,6 +56,11 @@ data "oci_identity_compartments" "MTCOMPARTMENTS" {
   }
 }
 
+data "oci_file_storage_exports" "EXPORTPATH" {
+  compartment_id      = local.mt_compartment_id
+  export_set_id = local.mount_target_id
+}
+
 
 data "oci_file_storage_mount_targets" "TESTMOUNTTARGETS" {
   #Required
@@ -88,4 +93,6 @@ locals {
   mount_target_id            = data.oci_file_storage_mount_targets.TESTMOUNTTARGETS.mount_targets[0].export_set_id
   mount_target_CIDR_Block    = "0.0.0.0/0"
   mount_target_private_ip    = data.oci_core_private_ip.MOUNTPRIVATEIP.ip_address
+
+  fss_export_path = data.oci_file_storage_exports.EXPORTPATH.exports[0].path
 }

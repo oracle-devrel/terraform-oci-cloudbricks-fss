@@ -64,6 +64,26 @@ variable "fss_mount_target_availability_domain" {
   description = "Availability domain where the mount target is located at"
 
 }
+
+variable "os_type" {
+  description = "Describes the type of OS currently in place. Valid values are: linux, ubuntu, windows"
+  type        = string
+
+
+}
+
+variable "ssh_private_is_path" {
+  description = "Determines if key is supposed to be on file or in text"
+  default     = true
+}
+
+variable "ssh_private_key" {
+  description = "Determines what is the private key to connect to machine"
+}
+
+variable "compute_private_ip" {
+  description = "Compute private IP to logon into machine"
+}
 /********** FSS Variables **********/
 
 /********** Datasource and Subnet Lookup related variables **********/
