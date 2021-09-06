@@ -79,10 +79,36 @@ variable "ssh_private_is_path" {
 
 variable "ssh_private_key" {
   description = "Determines what is the private key to connect to machine"
+  default = ""
 }
 
 variable "compute_private_ip" {
   description = "Compute private IP to logon into machine"
+}
+
+variable "win_os_password" {
+description = "Windows Server OS Password"
+default = ""
+  
+}
+
+variable "disk_unit" {
+description = "Disk Unit Assigned to NFS Disk"
+default = ""
+  
+}
+
+variable "is_winrm_configured_for_image" {
+  description = "Defines if winrm is being used in this installation"
+  type = bool
+  default     = true
+}
+
+
+variable "is_winrm_configured_with_ssl" {
+  description = "Use the https 5986 port for winrm by default. If that fails with a http response error: 401 - invalid content type, the SSL may not be configured correctly"
+  type = bool
+  default     = true
 }
 /********** FSS Variables **********/
 
