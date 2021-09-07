@@ -139,7 +139,7 @@ provisioner "remote-exec" {
 
 resource "null_resource" "mount_disk_windows" {
   depends_on = [
-    null_resource.install_prereq_ubuntu_os,
+    null_resource.install_prereq_windows_os,
     oci_file_storage_file_system.FileStorage,
     oci_file_storage_export.ExportFileSystemMount
   ]
