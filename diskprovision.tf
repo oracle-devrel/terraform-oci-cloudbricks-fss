@@ -132,6 +132,8 @@ provisioner "remote-exec" {
     inline = [
       "${local.powershell} Install-WindowsFeature NFS-Client",
       "${local.powershell} Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False",
+      "${local.powershell} Set-ItemProperty HKLM:\\SOFTWARE\\Microsoft\\ClientForNFS\\CurrentVersion\\Default -Name AnonymousUid -Value 0",
+      "${local.powershell} Set-ItemProperty HKLM:\\SOFTWARE\\Microsoft\\ClientForNFS\\CurrentVersion\\Default -Name AnonymousGid -Value 0",
       "${local.powershell} Stop-Service -Name NfsClnt",
       "${local.powershell} Restart-Service -Name NfsRdr",
       "${local.powershell} Start-Service -Name NfsClnt",
