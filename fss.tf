@@ -10,7 +10,7 @@ resource "oci_file_storage_export" "ExportFileSystemMount" {
   count          = var.num_of_fss
   export_set_id  = local.mount_target_id
   file_system_id = oci_file_storage_file_system.FileStorage[count.index].id
-  path           = count.index < "9" ? "${var.compute_display_name}${var.export_path_base}${var.label_zs[0]}${count.index + 1}" : "${var.compute_display_name}${var.export_path_base}${var.label_zs[1]}${count.index + 1}"
+  path           = count.index < "9" ? "/${var.compute_display_name}${var.export_path_base}${var.label_zs[0]}${count.index + 1}" : "/${var.compute_display_name}${var.export_path_base}${var.label_zs[1]}${count.index + 1}"
 
 
 
