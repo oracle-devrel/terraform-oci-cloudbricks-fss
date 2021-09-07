@@ -131,6 +131,7 @@ provisioner "remote-exec" {
 
     inline = [
       "${local.powershell} Install-WindowsFeature NFS-Client",
+      "${local.powershell} Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False",
     ]
   } 
 }
