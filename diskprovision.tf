@@ -158,9 +158,8 @@ resource "null_resource" "mount_disk_windows" {
     }
   provisioner "remote-exec" {
 
-    inline = [      
-      #"${local.powershell} mount ${local.mount_target_private_ip}:${local.fss_export_path} ${var.disk_unit}:",
-      "${local.powershell} New-PSDrive ${var.disk_unit} -PsProvider FileSystem -Root \\${local.mount_target_private_ip}:/${count.index < "9" ? "${var.compute_display_name}${var.export_path_base}${var.label_zs[0]}${count.index + 1}" : "${var.compute_display_name}${var.export_path_base}${var.label_zs[1]}${count.index + 1}"}",
+    inline = [            
+      "${local.powershell} New-PSDrive ${var.disk_unit} -PsProvider FileSystem -Root \\\\${local.mount_target_private_ip}:\\${count.index < "9" ? "${var.compute_display_name}${var.export_path_base}${var.label_zs[0]}${count.index + 1}" : "${var.compute_display_name}${var.export_path_base}${var.label_zs[1]}${count.index + 1}"} /u0${count.index + 1} ",
     ]
   }
 }
