@@ -50,7 +50,7 @@ resource "null_resource" "mount_disk_linux" {
       "sudo systemctl stop firewalld",
       "sudo systemctl disable firewalld",
       "sudo mkdir -p /u0${count.index + 1}/",
-      "echo ${local.mount_target_private_ip}:${count.index < "9" ? "${var.export_path_base}${var.label_zs[0]}${count.index + 1}" : "${var.export_path_base}${var.label_zs[1]}${count.index + 1}"} /u0${count.index + 1} nfs defaults 0 0 | sudo tee -a /etc/fstab",
+      "echo ${local.mount_target_private_ip}:${count.index < "9" ? "${var.compute_display_name}${var.export_path_base}${var.label_zs[0]}${count.index + 1}" : "${var.compute_display_name}${var.export_path_base}${var.label_zs[1]}${count.index + 1}"} /u0${count.index + 1} nfs defaults 0 0 | sudo tee -a /etc/fstab",
       "sudo mount -a",
       "sudo chown -R opc:opc /u0${count.index + 1}/",
       "cd /",
@@ -101,7 +101,7 @@ resource "null_resource" "mount_disk_ubuntu" {
     inline = [
       "set +x",
       "sudo mkdir -p /u0${count.index + 1}/",
-      "echo ${local.mount_target_private_ip}:${count.index < "9" ? "${var.export_path_base}${var.label_zs[0]}${count.index + 1}" : "${var.export_path_base}${var.label_zs[1]}${count.index + 1}"} /u0${count.index + 1} nfs defaults 0 0 | sudo tee -a /etc/fstab",
+      "echo ${local.mount_target_private_ip}:${count.index < "9" ? "${var.compute_display_name}${var.export_path_base}${var.label_zs[0]}${count.index + 1}" : "${var.compute_display_name}${var.export_path_base}${var.label_zs[1]}${count.index + 1}"} /u0${count.index + 1} nfs defaults 0 0 | sudo tee -a /etc/fstab",
       "sudo mount -a",
       "sudo chown -R ubuntu:ubuntu /u0${count.index + 1}/",
       "cd /",
@@ -160,7 +160,7 @@ resource "null_resource" "mount_disk_windows" {
 
     inline = [      
       #"${local.powershell} mount ${local.mount_target_private_ip}:${local.fss_export_path} ${var.disk_unit}:",
-      "${local.powershell} New-PSDrive ${var.disk_unit} -PsProvider FileSystem -Root \\${local.mount_target_private_ip}:${count.index < "9" ? "${var.export_path_base}${var.label_zs[0]}${count.index + 1}" : "${var.export_path_base}${var.label_zs[1]}${count.index + 1}"}",
+      "${local.powershell} New-PSDrive ${var.disk_unit} -PsProvider FileSystem -Root \\${local.mount_target_private_ip}:${count.index < "9" ? "${var.compute_display_name}${var.export_path_base}${var.label_zs[0]}${count.index + 1}" : "${var.compute_display_name}${var.export_path_base}${var.label_zs[1]}${count.index + 1}"}",
     ]
   }
 }

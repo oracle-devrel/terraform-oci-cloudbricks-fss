@@ -86,6 +86,12 @@ variable "compute_private_ip" {
   description = "Compute private IP to logon into machine"
 }
 
+variable "compute_display_name" {
+  description = "Describes the compute display name to which the disks will be associated with"
+  default = ""
+  
+}
+
 variable "win_os_password" {
 description = "Windows Server OS Password"
 default = ""
