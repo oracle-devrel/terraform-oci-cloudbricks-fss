@@ -132,6 +132,9 @@ provisioner "remote-exec" {
     inline = [
       "${local.powershell} Install-WindowsFeature NFS-Client",
       "${local.powershell} Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False",
+      "${local.powershell} Stop-Service -Name NfsClnt",
+      "${local.powershell} Restart-Service -Name NfsRdr",
+      "${local.powershell} Start-Service -Name NfsClnt",
     ]
   } 
 }
@@ -160,8 +163,8 @@ resource "null_resource" "mount_disk_windows" {
   provisioner "remote-exec" {
 
     inline = [            
-      #"${local.powershell} New-PSDrive ${var.disk_unit} -PSProvider FileSystem -Root \\\\${local.mount_target_private_ip}\\${count.index < "9" ? "${var.compute_display_name}${var.export_path_base}${var.label_zs[0]}${count.index + 1}" : "${var.compute_display_name}${var.export_path_base}${var.label_zs[1]}${count.index + 1}"} ",
-      "${local.powershell} ${local.mount_target_private_ip}:\\${count.index < "9" ? "${var.compute_display_name}${var.export_path_base}${var.label_zs[0]}${count.index + 1}" : "${var.compute_display_name}${var.export_path_base}${var.label_zs[1]}${count.index + 1}"} ${var.disk_unit}:",
+      "${local.powershell} New-PSDrive ${var.disk_unit} -PSProvider FileSystem -Root \\\\${local.mount_target_private_ip}\\${count.index < "9" ? "${var.compute_display_name}${var.export_path_base}${var.label_zs[0]}${count.index + 1}" : "${var.compute_display_name}${var.export_path_base}${var.label_zs[1]}${count.index + 1}"} ",
+      #"${local.powershell} ${local.mount_target_private_ip}:\\${count.index < "9" ? "${var.compute_display_name}${var.export_path_base}${var.label_zs[0]}${count.index + 1}" : "${var.compute_display_name}${var.export_path_base}${var.label_zs[1]}${count.index + 1}"} ${var.disk_unit}:",
     ]
   }
 }
