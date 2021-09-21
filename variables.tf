@@ -64,6 +64,58 @@ variable "fss_mount_target_availability_domain" {
   description = "Availability domain where the mount target is located at"
 
 }
+
+variable "os_type" {
+  description = "Describes the type of OS currently in place. Valid values are: linux, ubuntu, windows"
+  type        = string
+
+
+}
+
+variable "ssh_private_is_path" {
+  description = "Determines if key is supposed to be on file or in text"
+  default     = true
+}
+
+variable "ssh_private_key" {
+  description = "Determines what is the private key to connect to machine"
+  default = ""
+}
+
+variable "compute_private_ip" {
+  description = "Compute private IP to logon into machine"
+}
+
+variable "compute_display_name" {
+  description = "Describes the compute display name to which the disks will be associated with"
+  default = ""
+  
+}
+
+variable "win_os_password" {
+description = "Windows Server OS Password"
+default = ""
+  
+}
+
+variable "disk_unit" {
+description = "Disk Unit Assigned to NFS Disk"
+default = ""
+  
+}
+
+variable "is_winrm_configured_for_image" {
+  description = "Defines if winrm is being used in this installation"
+  type = bool
+  default     = true
+}
+
+
+variable "is_winrm_configured_with_ssl" {
+  description = "Use the https 5986 port for winrm by default. If that fails with a http response error: 401 - invalid content type, the SSL may not be configured correctly"
+  type = bool
+  default     = true
+}
 /********** FSS Variables **********/
 
 /********** Datasource and Subnet Lookup related variables **********/

@@ -56,8 +56,7 @@ data "oci_identity_compartments" "MTCOMPARTMENTS" {
   }
 }
 
-
-data "oci_file_storage_mount_targets" "TESTMOUNTTARGETS" {
+data "oci_file_storage_mount_targets" "MOUNTTARGET" {
   #Required
   availability_domain = var.fss_mount_target_availability_domain
   compartment_id      = local.mt_compartment_id
@@ -83,9 +82,13 @@ locals {
   vcn_id = lookup(data.oci_core_vcns.VCN.virtual_networks[0], "id")
 
   # FSS/Mount Target Local Accessors
-  mount_target_private_ip_id = data.oci_file_storage_mount_targets.TESTMOUNTTARGETS.mount_targets[0].private_ip_ids[0]
+  mount_target_private_ip_id = data.oci_file_storage_mount_targets.MOUNTTARGET.mount_targets[0].private_ip_ids[0]
   mt_compartment_id          = var.mt_compartment_id != "" ? var.mt_compartment_id : lookup(data.oci_identity_compartments.MTCOMPARTMENTS.compartments[0], "id")
-  mount_target_id            = data.oci_file_storage_mount_targets.TESTMOUNTTARGETS.mount_targets[0].export_set_id
+  mount_target_id            = data.oci_file_storage_mount_targets.MOUNTTARGET.mount_targets[0].export_set_id
   mount_target_CIDR_Block    = "0.0.0.0/0"
   mount_target_private_ip    = data.oci_core_private_ip.MOUNTPRIVATEIP.ip_address
+
+  powershell             = "powershell.exe"
+
+  
 }
