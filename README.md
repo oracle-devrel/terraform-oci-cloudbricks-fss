@@ -65,6 +65,11 @@ Error: 409-Conflict
 ```  
   
 - If this occurs, be sure to handle a retry logic on code that executes this module at least `num_of_fss + 1 ` times
+- Current OS supported for mounting FSS are: 
+  - Linux Based Systems 
+    - Ubuntu
+    - Linux
+  - *IMPORTANT* for Windows base systems, this feature is still not supported, however you can provision disk and mount it manually
 
 
 ## Sample provider
