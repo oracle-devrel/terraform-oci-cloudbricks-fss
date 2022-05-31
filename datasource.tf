@@ -88,7 +88,7 @@ locals {
   mount_target_CIDR_Block    = "0.0.0.0/0"
   mount_target_private_ip    = data.oci_core_private_ip.MOUNTPRIVATEIP.ip_address
 
-  powershell             = "powershell.exe"
+  powershell = "powershell.exe"
 
-  
+
 }

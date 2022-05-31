@@ -18,6 +18,6 @@ resource "oci_file_storage_export" "ExportFileSystemMount" {
     source                         = local.mount_target_CIDR_Block
     access                         = "READ_WRITE"
     identity_squash                = "NONE"
-    require_privileged_source_port = true
+    require_privileged_source_port = false
   }
 }
