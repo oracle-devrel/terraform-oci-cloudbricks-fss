@@ -62,14 +62,11 @@ variable "num_of_fss" {
 
 variable "fss_mount_target_availability_domain" {
   description = "Availability domain where the mount target is located at"
-
 }
 
 variable "os_type" {
   description = "Describes the type of OS currently in place. Valid values are: linux, ubuntu, windows"
   type        = string
-
-
 }
 
 variable "ssh_private_is_path" {
@@ -89,13 +86,16 @@ variable "compute_private_ip" {
 variable "compute_display_name" {
   description = "Describes the compute display name to which the disks will be associated with"
   default     = ""
-
 }
 
 variable "win_os_password" {
   description = "Windows Server OS Password"
   default     = ""
+}
 
+variable "windows_drive_letters" {
+  type    = list(any)
+  default = ["Z", "Y", "X", "W", "V", "U", "T", "S", "R", "Q", "P", "O", "N", "M", "L", "K", "J", "I", "H", "G", "F", "E", "D"]
 }
 
 variable "is_winrm_configured_for_image" {

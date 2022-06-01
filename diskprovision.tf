@@ -121,7 +121,7 @@ resource "null_resource" "install_prereq_windows_os" {
     connection {
       type     = "winrm"
       agent    = false
-      timeout  = "1m"
+      timeout  = "5m"
       host     = var.compute_private_ip
       user     = "opc"
       password = var.win_os_password
@@ -132,7 +132,6 @@ resource "null_resource" "install_prereq_windows_os" {
 
     inline = [
       "${local.powershell} Install-WindowsFeature NFS-Client",
-      # "${local.powershell} Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False",
       "${local.powershell} Set-ItemProperty HKLM:\\SOFTWARE\\Microsoft\\ClientForNFS\\CurrentVersion\\Default -Name AnonymousUid -Value 0",
       "${local.powershell} Set-ItemProperty HKLM:\\SOFTWARE\\Microsoft\\ClientForNFS\\CurrentVersion\\Default -Name AnonymousGid -Value 0",
       "${local.powershell} Stop-Service -Name NfsClnt",
@@ -152,21 +151,39 @@ resource "null_resource" "mount_disk_windows" {
 
   count = var.os_type == "windows" ? length(oci_file_storage_export.ExportFileSystemMount) : 0
 
+  triggers = {
+    compute_private_ip = var.compute_private_ip
+    win_os_password = var.win_os_password
+    is_winrm_configured_with_ssl = var.is_winrm_configured_with_ssl
+    compute_display_name = var.compute_display_name
+    export_path_base = var.export_path_base
+    label_zs_0 = var.label_zs[0]
+    label_zs_1 = var.label_zs[1]
+    drive_letter = var.windows_drive_letters[count.index]
+  }
+
   connection {
     type     = "winrm"
     agent    = false
-    timeout  = "1m"
-    host     = var.compute_private_ip
+    timeout  = "5m"
+    host     = self.triggers.compute_private_ip
     user     = "opc"
-    password = var.win_os_password
+    password = self.triggers.win_os_password
     port     = 5986
-    https    = var.is_winrm_configured_with_ssl
+    https    = self.triggers.is_winrm_configured_with_ssl
     insecure = "true"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "net use Z: \\\\${local.mount_target_private_ip}\\${count.index < "9" ? "${var.compute_display_name}${var.export_path_base}${var.label_zs[0]}${count.index + 1}" : "${var.compute_display_name}${var.export_path_base}${var.label_zs[1]}${count.index + 1}"} /persistent:yes"
+      "net use ${self.triggers.drive_letter}: \\\\${local.mount_target_private_ip}\\${count.index < "9" ? "${self.triggers.compute_display_name}${self.triggers.export_path_base}${self.triggers.label_zs_0}${count.index + 1}" : "${self.triggers.compute_display_name}${self.triggers.export_path_base}${self.triggers.label_zs_1}${count.index + 1}"} /persistent:yes"
+    ]
+  }
+
+  provisioner "remote-exec" {
+    when   = destroy
+    inline = [
+      "net use ${self.triggers.drive_letter}: /delete"
     ]
   }
 }
