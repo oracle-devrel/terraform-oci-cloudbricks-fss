@@ -35,7 +35,7 @@ variable "fss_mount_target_name" {
   description = "User friendly name for Mount Target"
 }
 
-variable "fss_display_name_base" {
+variable "fss_disk_name_base" {
   description = "User friendly name for File Storage Service"
 }
 
@@ -67,6 +67,7 @@ variable "fss_mount_target_availability_domain" {
 variable "os_type" {
   description = "Describes the type of OS currently in place. Valid values are: linux, ubuntu, windows"
   type        = string
+  default     = ""
 }
 
 variable "ssh_private_is_path" {
@@ -79,12 +80,13 @@ variable "ssh_private_key" {
   default     = ""
 }
 
-variable "compute_private_ip" {
-  description = "Compute private IP to logon into machine"
+variable "compute_private_ips" {
+  description = "Compute private IPs to logon into machine"
+  default     = ""
 }
 
-variable "compute_display_name" {
-  description = "Describes the compute display name to which the disks will be associated with"
+variable "fss_disk_group_base" {
+  description = "Describes the group display name to which the disks will be associated with"
   default     = ""
 }
 
