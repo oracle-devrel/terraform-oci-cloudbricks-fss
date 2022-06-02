@@ -78,6 +78,7 @@ locals {
   # Compartment OCID Local Accessor 
   compartment_id    = lookup(data.oci_identity_compartments.COMPARTMENTS.compartments[0], "id")
   nw_compartment_id = lookup(data.oci_identity_compartments.NWCOMPARTMENTS.compartments[0], "id")
+
   # VCN OCID Local Accessor
   vcn_id = lookup(data.oci_core_vcns.VCN.virtual_networks[0], "id")
 
@@ -88,7 +89,5 @@ locals {
   mount_target_CIDR_Block    = "0.0.0.0/0"
   mount_target_private_ip    = data.oci_core_private_ip.MOUNTPRIVATEIP.ip_address
 
-  powershell             = "powershell.exe"
-
-  
+  powershell = "powershell.exe"
 }

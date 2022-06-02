@@ -35,7 +35,7 @@ variable "fss_mount_target_name" {
   description = "User friendly name for Mount Target"
 }
 
-variable "fss_display_name_base" {
+variable "fss_disk_name_base" {
   description = "User friendly name for File Storage Service"
 }
 
@@ -62,14 +62,12 @@ variable "num_of_fss" {
 
 variable "fss_mount_target_availability_domain" {
   description = "Availability domain where the mount target is located at"
-
 }
 
 variable "os_type" {
   description = "Describes the type of OS currently in place. Valid values are: linux, ubuntu, windows"
   type        = string
-
-
+  default     = ""
 }
 
 variable "ssh_private_is_path" {
@@ -79,41 +77,39 @@ variable "ssh_private_is_path" {
 
 variable "ssh_private_key" {
   description = "Determines what is the private key to connect to machine"
-  default = ""
+  default     = ""
 }
 
-variable "compute_private_ip" {
-  description = "Compute private IP to logon into machine"
+variable "compute_private_ips" {
+  description = "Compute private IPs to logon into machine"
+  default     = ""
 }
 
-variable "compute_display_name" {
-  description = "Describes the compute display name to which the disks will be associated with"
-  default = ""
-  
+variable "fss_disk_group_base" {
+  description = "Describes the group display name to which the disks will be associated with"
+  default     = ""
 }
 
 variable "win_os_password" {
-description = "Windows Server OS Password"
-default = ""
-  
+  description = "Windows Server OS Password"
+  default     = ""
 }
 
-variable "disk_unit" {
-description = "Disk Unit Assigned to NFS Disk"
-default = ""
-  
+variable "windows_drive_letters" {
+  type    = list(any)
+  default = ["Z", "Y", "X", "W", "V", "U", "T", "S", "R", "Q", "P", "O", "N", "M", "L", "K", "J", "I", "H", "G", "F", "E", "D"]
 }
 
 variable "is_winrm_configured_for_image" {
   description = "Defines if winrm is being used in this installation"
-  type = bool
+  type        = bool
   default     = true
 }
 
 
 variable "is_winrm_configured_with_ssl" {
   description = "Use the https 5986 port for winrm by default. If that fails with a http response error: 401 - invalid content type, the SSL may not be configured correctly"
-  type = bool
+  type        = bool
   default     = true
 }
 /********** FSS Variables **********/
